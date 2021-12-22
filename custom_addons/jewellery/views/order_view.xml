@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="order_tree_view" model="ir.ui.view">
+        <field name="name">order.tree.view</field>
+        <field name="model">order.order</field>
+        <field name="arch" type="xml">
+            <tree string="Order">
+                <field name="customer_name"/>
+                <field name="customer_mob"/>
+                <field name="customer_address"/>
+                <field name="product_type"/>
+                <field name="order_date"/>
+                <field name="dele_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="order_form_view" model="ir.ui.view">
+        <field name="name">order.form.view</field>
+        <field name="model">order.order</field>
+        <field name="arch" type="xml">
+            <form string="Order">
+                <sheet>
+                    <group style="text-align:center" string="Create Order."/>
+                    <group>
+                        <group>
+                            <field name="customer_name"  placeholder=" Mr. Arjun" />
+                            <br/>
+                            <field name="customer_mob"/>
+                            <br/>
+                            <field name="customer_address"/>
+                        </group>
+                        <group>
+                            <field name="product_type"/>
+                            <br/>
+                            <field name="order_date"/>
+                            <br/>
+                            <field name="dele_date"/>
+                            <br/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order">
+                            <field name="gold_orderline">
+                                <tree editable="bottom">
+                                    <field name="gold_rate"/>
+                                    <field name="product_name"/>
+<!--                                    <field name="gold_rate_ref"/>-->
+<!--                                    <field name="gold_price_rate"/>-->
+                                    <field name="weight"/>
+                                    <field name="product_image"/>
+                                    <field name="product_quantity"/>
+                                    <field name="making_cost"/>
+                                    <field name="sub_total_price"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Payment">
+                            <field name="paymentline">
+                                `<tree editable="bottom">
+                                        <field name="price_id"/>
+                                        <field name="total_price"/>
+                                        <field name="advance_payment"/>
+                                        <field name="total_due"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_order" model="ir.actions.act_window" >
+        <field name="name"> Order </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="jewellery_root" name="Jewellery" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="order" name="Order" parent="jewellery_root" action="action_order"/>
+
+</odoo>
