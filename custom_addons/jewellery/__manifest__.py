@@ -15,6 +15,7 @@
     ],
     'data': [
         'views/order_view.xml',
+        'views/rate.xml',
         # 'views/payment_view.xml',
         'security/ir.model.access.csv',
 

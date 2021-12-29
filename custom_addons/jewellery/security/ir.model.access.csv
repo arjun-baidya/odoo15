@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_order_order,access.order.order,model_order_order,,1,1,1,1
 access_orderline_data,access.orderline.data,model_orderline_data,,1,1,1,1
 access_paymentline_data,access.paymentline.data,model_paymentline_data,,1,1,1,1
+access_gold_rate,access.gold.rate,model_gold_rate,,1,1,1,1

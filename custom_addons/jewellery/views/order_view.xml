@@ -33,6 +33,10 @@
                         <group>
                             <field name="product_type"/>
                             <br/>
+                            <field name="product_type_id"/>
+                            <br/>
+                            <field name="gold_rate" />
+                            <br/>
                             <field name="order_date"/>
                             <br/>
                             <field name="dele_date"/>

@@ -2,6 +2,14 @@ from odoo import fields, models, api
 from datetime import datetime
 
 
+class Rate(models.Model):
+    _name = 'gold.rate'
+    _description = "daily gold rate"
+
+    name = fields.Char(string='Product Type :')
+    rate = fields.Integer(string="gold rate")
+
+
 class Order(models.Model):
     _name = 'order.order'
     _inherit = ['mail.thread', 'mail.activity.mixin', ]
@@ -14,13 +22,24 @@ class Order(models.Model):
     customer_address = fields.Char(string="Address", required=False, )
     product_type = fields.Selection(string="Product Type", selection=[('gold', 'Gold'), ('silver', 'Silver'), ],
                                     required=False, )
-    # gold_rate = fields.Integer(string="Gold Rate", required=True, )
+    product_type_id = fields.Many2one('gold.rate', string='Product Type :', change_default=True)
+    gold_rate = fields.Integer(string="Gold Rate", required=True)
     order_date = fields.Datetime(string="Date", default=fields.datetime.now(), readonly="1")
     dele_date = fields.Datetime(string="Delivery Date", required=True)
     gold_orderline = fields.One2many(comodel_name="orderline.data", inverse_name="create_orderline",
                                      string="gold order", )
     paymentline = fields.One2many(comodel_name="paymentline.data", inverse_name="create_paymentline",
                                   string="gold payment", )
+
+    @api.onchange('product_type_id')
+    def onchange_product_type(self):
+        if self.product_type_id:
+            print(self.product_type_id)
+            if self.product_type_id.rate:
+                self.gold_rate = self.product_type_id.rate
+                print(self.gold_rate)
+        else:
+            self.gold_rate = ''
 
 
 class Order_Line(models.Model):
@@ -34,7 +53,7 @@ class Order_Line(models.Model):
     product_image = fields.Image(string="Image")
     product_quantity = fields.Integer(string="Quantity", required=True)
     making_cost = fields.Integer(string="Making cost", )
-    gold_rate = fields.Float(string="Gold Rate", required=True, )
+    gold_rate = fields.Many2one('gold.rate', string="Gold Rate", required=True, )
     sub_total_price = fields.Float(string="Sub Total Price", compute='gold_cost_count', store=True)
     create_orderline = fields.Many2one('order.order', string="Oder Line")
 
@@ -54,9 +73,6 @@ class PaymentLine(models.Model):
     advance_payment = fields.Integer(string="Advance payment")
     total_due = fields.Float(string="Total Due")
     create_paymentline = fields.Many2one('order.order', string="Payment Line")
-
-
-
 
     # def call_func_c(self):
     #     return self.env["orderline.data"].gold_cost_count()

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rate_tree_view" model="ir.ui.view">
+        <field name="name">rate.tree.view</field>
+        <field name="model">gold.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Rate">
+                <field name="rate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="rate_form_view" model="ir.ui.view">
+        <field name="name">rate.form.view</field>
+        <field name="model">gold.rate</field>
+        <field name="arch" type="xml">
+            <form string="Rate">
+                <sheet>
+                    <group style="text-align:center" string="Create Rate."/>
+                    <group>
+                         <field name="name" />
+                        <field name="rate"  placeholder=" 580000" />
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_rate" model="ir.actions.act_window" >
+        <field name="name"> Rate </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gold.rate</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="jewellery_root" name="Jewellery" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="rate" name="Rate" parent="jewellery_root" action="action_rate"/>
+</odoo>
