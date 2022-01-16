@@ -1,4 +1,4 @@
-from AptUrl.Helpers import _
+# from AptUrl.Helpers import _
 
 from odoo import fields, models, api
 from datetime import datetime
